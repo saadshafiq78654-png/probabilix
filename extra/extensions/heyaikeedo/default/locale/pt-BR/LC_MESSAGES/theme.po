@@ -1,0 +1,385 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Theme Translations\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language: pt-BR\n"
+"Language-Team: \n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: theme\n"
+
+msgid "AI Writer"
+msgstr "Escritor de IA"
+
+msgid "Achieve superior outcomes in a fraction of the time. At last, a writing tool that you'll genuinely utilize."
+msgstr "Alcance resultados superiores em uma fração do tempo. Por fim, uma ferramenta de escrita que você realmente utilizará."
+
+msgctxt "heading"
+msgid "Write SEO optimized blogs, sales emails and more..."
+msgstr "Escreva blogs otimizados para SEO, e-mails de vendas e mais..."
+
+msgctxt "button"
+msgid "See all features"
+msgstr "Ver todos os recursos"
+
+msgid "Video"
+msgstr ""
+
+msgid "No video editing skills required - just upload your images and enter a few lines of prompt, that's it."
+msgstr ""
+
+msgctxt "heading"
+msgid "Generate high-quality videos using AI Video generation tool."
+msgstr ""
+
+msgctxt "button"
+msgid "Try now"
+msgstr "Experimente agora"
+
+msgid "Text to Voice"
+msgstr "Texto para Voz"
+
+msgid "Elevate Your Content with Expressive Narration: Discover Text-to-Voice Excellence."
+msgstr "Eleve seu conteúdo com narração expressiva: Descubra a excelência de texto para voz."
+
+msgctxt "heading"
+msgid "Convert your texts into <br> Lifelike Speech"
+msgstr "Converta seus textos em <br> Fala Realista"
+
+msgid "Speech to Text"
+msgstr "Fala para Texto"
+
+msgid "Instantly Transcribe Spoken Words into Text for Enhanced Productivity and Accessibility."
+msgstr "Transcreva instantaneamente palavras faladas em texto para aumentar a produtividade e acessibilidade."
+
+msgctxt "heading"
+msgid "Transforming Spoken <br> Words into Text."
+msgstr "Transformando Palavras <br> Faladas em Texto."
+
+msgctxt "button"
+msgid "Convert now"
+msgstr "Converter agora"
+
+msgid ":count credits"
+msgstr ":count créditos"
+
+msgid "Discover the perfect plan to suit your needs and unlock a world of possibilities."
+msgstr "Descubra o plano perfeito para atender às suas necessidades e desbloqueie um mundo de possibilidades."
+
+msgid "Most Popular"
+msgstr "Mais Popular"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "Writer"
+msgstr "Escritor"
+
+msgid "Coding Assistant"
+msgstr "Assistente de Codificação"
+
+msgid "Image generator"
+msgstr "Gerador de imagens"
+
+msgid "Transcriber"
+msgstr "Transcritor"
+
+msgid "Voiceover"
+msgstr "Narração"
+
+msgid "Voice isolator"
+msgstr "Isolador de voz"
+
+msgid "Classifier"
+msgstr "Classificador"
+
+msgid "Access to templates is disabled"
+msgstr "Acesso aos modelos está desativado"
+
+msgid "Access to all templates"
+msgstr "Acesso a todos os modelos"
+
+msgid "Priority support"
+msgstr "Suporte prioritário"
+
+msgid "Basic support"
+msgstr "Suporte básico"
+
+msgctxt "heading"
+msgid "Pricing"
+msgstr ""
+
+msgctxt "button"
+msgid "Monthly"
+msgstr "Mensal"
+
+msgctxt "button"
+msgid "Yearly"
+msgstr "Anual"
+
+msgctxt "button"
+msgid "Packs"
+msgstr "Pacotes"
+
+msgctxt "button"
+msgid "Lifetime Deals"
+msgstr "Ofertas Vitalícias"
+
+msgctxt "button"
+msgid "Get started"
+msgstr "Começar"
+
+msgid "100+ AI Writer Templates"
+msgstr "Mais de 100 Modelos de Escrita com IA"
+
+msgid "Write with remarkable speed, captivate your audience, and bid farewell to writer\\'s block forever."
+msgstr "Escreva com velocidade notável, cativando seu público e dando adeus ao bloqueio de escritor para sempre."
+
+msgctxt "heading"
+msgid "What can Writing Assistant create for you?"
+msgstr "O que o Assistente de Escrita pode criar para você?"
+
+msgctxt "button"
+msgid "Get Started for Free"
+msgstr "Comece Gratuitamente"
+
+msgid "AI Image"
+msgstr "Imagem de IA"
+
+msgid "Instantly create stunning images using AI Image Generator – your tool for artistic innovation."
+msgstr "Crie imagens incríveis instantaneamente usando o Gerador de Imagens de IA - sua ferramenta para inovação artística."
+
+msgctxt "heading"
+msgid "Visualize what you dream of. Create images from text."
+msgstr "Visualize o que você sonha. Crie imagens a partir de texto."
+
+msgctxt "button"
+msgid "Try for free"
+msgstr "Experimente grátis"
+
+msgid "Choose a our built in templates or create your own."
+msgstr "Escolha um dos nossos modelos integrados ou crie o seu próprio."
+
+msgid "Enter a few sentences to describe your topic. Add keywords to specify for your brand."
+msgstr "Digite algumas frases para descrever seu tópico. Adicione palavras-chave para especificar para sua marca."
+
+msgid "Click the \"Generate\" button and get a variety of high-converting copy every time."
+msgstr "Clique no botão \"Gerar\" e obtenha uma variedade de cópias de alta conversão a cada vez."
+
+msgctxt "heading"
+msgid "How it works"
+msgstr "Como funciona"
+
+msgctxt "heading"
+msgid "Choose Template"
+msgstr "Escolher Modelo"
+
+msgctxt "heading"
+msgid "Describe"
+msgstr "Descrever"
+
+msgctxt "heading"
+msgid "Generate"
+msgstr "Gerar"
+
+msgid "Effortlessly generate high-quality AI-driven content tailored to your needs. Unlock limitless possibilities, save your time and start making money today!"
+msgstr "Gere facilmente conteúdo de alta qualidade impulsionado por IA, adaptado às suas necessidades. Desbloqueie possibilidades ilimitadas, economize tempo e comece a ganhar dinheiro hoje!"
+
+msgctxt "heading"
+msgid "Transforming ideas into AI generated masterpieces"
+msgstr "Transformando ideias em obras-primas geradas por IA"
+
+msgctxt "button"
+msgid "Go to app"
+msgstr "Ir para o app"
+
+msgctxt "button"
+msgid "Get started now"
+msgstr "Comece agora"
+
+msgctxt "button"
+msgid "Product"
+msgstr "Produto"
+
+msgctxt "button"
+msgid "Featured"
+msgstr "Destaque"
+
+msgctxt "button"
+msgid "Pricing"
+msgstr "Preços"
+
+msgctxt "button"
+msgid "Library"
+msgstr "Biblioteca"
+
+msgctxt "button"
+msgid "Billing"
+msgstr "Faturamento"
+
+msgctxt "button"
+msgid "Account"
+msgstr "Conta"
+
+msgctxt "button"
+msgid "Logout"
+msgstr "Sair"
+
+msgctxt "button"
+msgid "Login"
+msgstr "Entrar"
+
+msgctxt "heading"
+msgid "Meet your ultimate"
+msgstr "Conheça seu definitivo"
+
+msgctxt "heading"
+msgid "AI-Powered Content Platform"
+msgstr "Plataforma de Conteúdo com IA"
+
+msgid "All rights reserved."
+msgstr "Todos os direitos reservados."
+
+msgctxt "button"
+msgid "FAQ"
+msgstr "Perguntas Frequentes"
+
+msgctxt "button"
+msgid "Terms of services"
+msgstr "Termos de serviço"
+
+msgctxt "button"
+msgid "Privacy policy"
+msgstr "Política de privacidade"
+
+msgctxt "button"
+msgid "Refund policy"
+msgstr "Política de reembolso"
+
+msgid "Developed by Using Domain-Driven Design and Onion Architecture Principles."
+msgstr "Desenvolvido usando Design Orientado a Domínio e Princípios da Arquitetura Onion."
+
+msgid "Built with modern technologies for best structure and get maximum performance."
+msgstr "Construído com tecnologias modernas para a melhor estrutura e obtenção do máximo desempenho."
+
+msgid "Enjoy a hassle-free and intuitive user interface that enhances your digital experience."
+msgstr "Desfrute de uma interface de usuário intuitiva e sem complicações que melhora sua experiência digital."
+
+msgid "Turn off the light and switch to dark mode your interface with one click."
+msgstr "Desligue a luz e altere sua interface para o modo escuro com um clique."
+
+msgid "An all-inclusive learning package seamlessly integrated into our community."
+msgstr "Um pacote de aprendizado completo integrado perfeitamente à nossa comunidade."
+
+msgid "Simplify transactions and boost security with payment gateway solutions."
+msgstr "Simplifique transações e aumente a segurança com soluções de gateway de pagamento."
+
+msgid "Unlock limitless creativity with our AI-powered content generator."
+msgstr "Desbloqueie criatividade ilimitada com nosso gerador de conteúdo alimentado por IA."
+
+msgid "Boost your visibility and reach your audience effectively with AI generated content."
+msgstr "Aumente sua visibilidade e alcance seu público efetivamente com conteúdo gerado por IA."
+
+msgid "Empower your insights and control with our cutting-edge dashboard."
+msgstr "Potencialize seus insights e controle com nosso painel de controle de última geração."
+
+msgid "Transform your content creation with AI-driven custom templates."
+msgstr "Transforme sua criação de conteúdo com modelos personalizados impulsionados por IA."
+
+msgid "Use Facebook or Google accounts as an alternatively access to platform."
+msgstr "Use contas do Facebook ou Google como acesso alternativo à plataforma."
+
+msgid "Our support team is available 24/7 to help you with any questions or concerns."
+msgstr "Nosso time de suporte está disponível 24/7 para ajudar com quaisquer perguntas ou preocupações."
+
+msgctxt "heading"
+msgid "Coolest Features"
+msgstr "Recursos Mais Legais"
+
+msgctxt "heading"
+msgid "High Quality Code"
+msgstr "Código de Alta Qualidade"
+
+msgctxt "heading"
+msgid "Modern Technologies"
+msgstr "Tecnologias Modernas"
+
+msgctxt "heading"
+msgid "Friendly UI and UX"
+msgstr "Interface e Experiência do Usuário Amigáveis"
+
+msgctxt "heading"
+msgid "Dark Mode"
+msgstr "Modo Escuro"
+
+msgctxt "heading"
+msgid "Documentation"
+msgstr "Documentação"
+
+msgctxt "heading"
+msgid "Payment Gateways"
+msgstr "Gateways de Pagamento"
+
+msgctxt "heading"
+msgid "AI Generator"
+msgstr "Gerador de IA"
+
+msgctxt "heading"
+msgid "SEO Friendly"
+msgstr "SEO Amigável"
+
+msgctxt "heading"
+msgid "Advanced Dashboard"
+msgstr "Painel Avançado"
+
+msgctxt "heading"
+msgid "Custom Templates"
+msgstr "Modelos Personalizados"
+
+msgctxt "heading"
+msgid "Login via SM Accounts"
+msgstr "Login via Contas de Redes Sociais"
+
+msgctxt "heading"
+msgid "High Quality Support"
+msgstr "Suporte de Alta Qualidade"
+
+msgid "See how easy it can be to write amazing content."
+msgstr "Veja como pode ser fácil escrever um conteúdo incrível."
+
+msgctxt "heading"
+msgid "Ready to level-up?"
+msgstr "Pronto para avançar?"
+
+msgctxt "button"
+msgid "Get Started Now"
+msgstr "Comece Agora"
+
+msgid "AI Code"
+msgstr "Código de IA"
+
+msgid "Effortless coding with AI Code Generator: Instant solutions for your programming needs."
+msgstr "Gere facilmente código com o Gerador de Código IA: Soluções instantâneas para suas necessidades de programação."
+
+msgctxt "heading"
+msgid "Ready to write code at the speed of light?"
+msgstr "Pronto para escrever código na velocidade da luz?"
+
+msgctxt "button"
+msgid "Start Generate Code"
+msgstr "Começar a Gerar Código"
+
+msgid "AI Chat Bot"
+msgstr "Bot de Chat de IA"
+
+msgid "Simply choose your asistant and engage with a friendly chatbot to generate ideas, enhance your content, or even bring a smile to your face."
+msgstr "Simplesmente escolha seu assistente e interaja com um chatbot amigável para gerar ideias, melhorar seu conteúdo ou até mesmo trazer um sorriso para seu rosto."
+
+msgctxt "heading"
+msgid "That\\'s remarkably human-like and engaging..."
+msgstr "Isso é notavelmente humano e envolvente..."
+
+msgid "Unlimited"
+msgstr "Ilimitado"

@@ -1,0 +1,6 @@
+{
+    "heyaikeedo\/default": {
+        "assets": "public\/e\/heyaikeedo\/default\/assets",
+        ".vite": "public\/e\/heyaikeedo\/default\/.vite"
+    }
+}

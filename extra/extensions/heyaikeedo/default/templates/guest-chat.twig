@@ -1,0 +1,1326 @@
+{% extends "@theme/layouts/theme.twig" %}
+
+{% block title p__('title', 'Chat with AI')|title %}
+
+{% block template %}
+<style>
+/* Clean minimal design matching the screenshot */
+.main-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.greeting {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: rgb(var(--color-primary));
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 700px;
+}
+
+.chat-input-wrapper {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.main-input {
+  width: 100%;
+  padding: 16px 50px 16px 20px;
+  font-size: 1.1rem;
+  border: 2px solid rgb(var(--color-line-secondary));
+  border-radius: 12px;
+  background: rgb(var(--color-contrast-primary));
+  color: rgb(var(--color-primary));
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+  min-height: 60px;
+}
+
+.main-input:focus {
+  border-color: rgb(var(--color-accent));
+}
+
+.main-input::placeholder {
+  color: rgb(var(--color-tertiary));
+}
+
+/* Dark theme legibility improvements */
+@media (prefers-color-scheme: dark) {
+  .main-input {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  .main-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .send-btn {
+    background: rgb(var(--color-accent));
+    color: rgb(var(--color-contrast-primary));
+  }
+  .send-btn:disabled {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.send-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background: rgb(var(--color-accent));
+  border: none;
+  border-radius: 8px;
+  color: rgb(var(--color-contrast-primary));
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.send-btn:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+}
+
+.keyboard-hint {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgb(var(--color-line-tertiary));
+  color: rgb(var(--color-tertiary));
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.main-input:focus + .keyboard-hint {
+  opacity: 0;
+}
+
+.description {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.description h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgb(var(--color-primary));
+  margin-bottom: 8px;
+}
+
+.description p {
+  color: rgb(var(--color-secondary));
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.explore-hint {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgb(var(--color-tertiary));
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.explore-btn:hover {
+  color: rgb(var(--color-secondary));
+}
+
+.credits-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgb(var(--color-contrast-accent));
+  color: rgb(var(--color-accent));
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Chat Messages Modal */
+.chat-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.chat-modal.active {
+  display: flex;
+}
+
+.chat-window {
+  background: rgb(var(--color-contrast-primary));
+  border-radius: 16px;
+  width: 100%;
+  max-width: 800px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.chat-header {
+  padding: 20px;
+  border-bottom: 1px solid rgb(var(--color-line-secondary));
+  display: flex;
+  justify-content: between;
+  align-items: center;
+}
+
+.chat-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgb(var(--color-primary));
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: rgb(var(--color-tertiary));
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background: rgb(var(--color-line-secondary));
+}
+
+.messages-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgb(var(--color-contrast-secondary));
+}
+
+.message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.message-avatar.ai {
+  background: rgb(var(--color-contrast-accent));
+  color: rgb(var(--color-accent));
+}
+
+.message-avatar.user {
+  background: rgb(var(--color-line-secondary));
+  color: rgb(var(--color-secondary));
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.message.ai .message-content {
+  background: rgb(var(--color-contrast-primary));
+  color: rgb(var(--color-primary));
+  border-bottom-left-radius: 6px;
+}
+
+.message.user .message-content {
+  background: rgb(var(--color-accent));
+  color: rgb(var(--color-contrast-primary));
+  border-bottom-right-radius: 6px;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: rgb(var(--color-tertiary));
+  margin-top: 4px;
+}
+
+.message.user .message-time {
+  text-align: right;
+}
+
+.loading-message .message-content {
+  background: rgb(var(--color-contrast-primary));
+  color: rgb(var(--color-secondary));
+}
+
+.loading-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.loading-dot {
+  width: 6px;
+  height: 6px;
+  background: rgb(var(--color-tertiary));
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dot:nth-child(1) { animation-delay: -0.32s; }
+.loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+.chat-input-area {
+  padding: 20px;
+  border-top: 1px solid rgb(var(--color-line-secondary));
+}
+
+.warning-banner {
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.warning-banner.error {
+  background: rgba(var(--color-failure), 0.1);
+  color: rgb(var(--color-failure));
+  border: 1px solid rgba(var(--color-failure), 0.2);
+}
+
+.warning-banner.warning {
+  background: rgba(var(--color-info), 0.1);
+  color: rgb(var(--color-info));
+  border: 1px solid rgba(var(--color-info), 0.2);
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    padding: 40px 16px;
+  }
+  
+  .greeting {
+    font-size: 2rem;
+  }
+  
+  .chat-modal {
+    padding: 10px;
+  }
+  
+  .chat-window {
+    height: 90vh;
+  }
+  
+  .credits-badge {
+    position: static;
+    margin-bottom: 20px;
+  }
+}
+
+/* Mobile responsive for features section */
+@media (max-width: 1024px) {
+  #featuresSection > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+    text-align: center;
+  }
+  
+  #featuresSection h2 {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #featuresSection {
+    padding: 40px 16px !important;
+  }
+  
+  #featuresSection h2 {
+    font-size: 2rem !important;
+  }
+  
+  .feature-slide > div:last-child > div {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+/* Typing animation */
+.typing-caret {
+  display: inline-block;
+  width: 1ch;
+  color: rgb(var(--color-tertiary));
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+</style>
+
+<div class="main-container">
+  <!-- Credits Badge -->
+  <div class="credits-badge">
+    <span id="creditsDisplay">{{ guest_credits }} free credits</span>
+  </div>
+
+  <!-- Main Greeting -->
+  <div class="greeting">
+    <span id="typingText">Hey, what's on your mind today?</span>
+    <span class="typing-caret">|</span>
+  </div>
+
+  <!-- Chat Input Container -->
+  <div class="chat-container">
+    <div class="chat-input-wrapper">
+      <textarea 
+        id="mainInput"
+        class="main-input"
+        placeholder="Ask me anything..."
+        rows="1"></textarea>
+      <div class="keyboard-hint" id="keyboardHint">⌘K</div>
+      <button type="button" class="send-btn" id="sendBtn" onclick="try{if(window.__guestSend){return window.__guestSend();}}catch(e){};(function(){var m=document.getElementById('mainInput');var v=m?m.value.trim():'';if(!v){var modal=document.getElementById('chatModal');if(modal){modal.classList.add('active');document.body.style.overflow='hidden';}return false;}var logged=(localStorage.getItem('jwt')||'')||document.cookie.indexOf('user=')>-1;if(logged){window.location.href='/app/chat?q='+encodeURIComponent(v);return false;}var ci=document.getElementById('chatInput');if(ci){ci.value=v;}if(m){m.value='';}var modal=document.getElementById('chatModal');if(modal){modal.classList.add('active');document.body.style.overflow='hidden';}return false;})();">
+        <i class="ti ti-arrow-right" id="sendIcon"></i>
+        <i class="ti ti-loader" id="loadingIcon" style="display: none; animation: spin 1s linear infinite;"></i>
+      </button>
+    </div>
+
+    <!-- Description -->
+    <div class="description">
+      <h2>The Complete AI Workspace — in the Cloud</h2>
+      <p>Think ChatGPT, but enhanced with powerful image and video creation, audio transcription, and much more. Get access to cutting-edge AI models through one unified platform designed for creators, businesses, and developers.</p>
+    </div>
+
+    <!-- Explore Button -->
+    <div class="explore-hint">
+      <button class="explore-btn" onclick="scrollToFeatures()">
+        <i class="ti ti-arrow-down"></i>
+        <span>Scroll down to explore</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Chat Modal -->
+<div class="chat-modal" id="chatModal">
+  <div class="chat-window">
+    <div class="chat-header">
+      <div class="chat-title">Chat with AI</div>
+      <button class="close-btn" onclick="closeChatModal()">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    
+    <div class="messages-area" id="messagesArea">
+      <!-- Welcome Message -->
+      <div class="message ai">
+        <div class="message-avatar ai">
+          <i class="ti ti-robot"></i>
+        </div>
+        <div>
+          <div class="message-content">
+            <strong>Welcome to Probabilix AI! 🎉</strong><br><br>
+            I'm here to help you with anything you need. You have {{ guest_credits }} free credits to get started. 
+            Try asking me about writing, coding, analysis, or any creative tasks!
+          </div>
+          <div class="message-time">Just now</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-input-area">
+      <div id="creditWarning" style="display: none;"></div>
+      
+      <form id="chatForm" style="display: flex; gap: 12px; align-items: flex-end;">
+        <textarea 
+          id="chatInput"
+          class="main-input"
+          placeholder="Type your message..."
+          rows="1"
+          style="flex: 1; margin: 0;"></textarea>
+        <button type="submit" class="send-btn" id="chatSendBtn" style="position: static; transform: none;">
+          <i class="ti ti-arrow-right" id="chatSendIcon"></i>
+          <i class="ti ti-loader" id="chatLoadingIcon" style="display: none; animation: spin 1s linear infinite;"></i>
+        </button>
+      </form>
+      
+      <div style="margin-top: 12px; font-size: 0.8rem; color: rgb(var(--color-tertiary)); text-align: center;">
+        <span id="creditsFooter">{{ guest_credits }} credits remaining</span> • Free AI chat • No sign-up required
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features Section (for scroll down) -->
+<div style="padding: 60px 20px; max-width: 1400px; margin: 0 auto;" id="featuresSection">
+  
+  <!-- Some Cool Features Section -->
+  <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: center; margin-bottom: 120px;">
+    <!-- Left Side - Text Content -->
+    <div>
+      <h2 style="font-size: 3rem; font-weight: bold; margin-bottom: 40px; color: rgb(var(--color-primary)); line-height: 1.1;">
+        Some cool features
+      </h2>
+      
+      <!-- Navigation Arrows -->
+      <div style="display: flex; gap: 16px; margin-bottom: 40px;">
+        <button style="width: 48px; height: 48px; border: 2px solid rgb(var(--color-line-secondary)); border-radius: 50%; background: rgb(var(--color-contrast-primary)); color: rgb(var(--color-secondary)); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;" onclick="previousFeature()">
+          <i class="ti ti-arrow-left" style="font-size: 20px;"></i>
+        </button>
+        <button style="width: 48px; height: 48px; border: 2px solid rgb(var(--color-line-secondary)); border-radius: 50%; background: rgb(var(--color-contrast-primary)); color: rgb(var(--color-secondary)); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;" onclick="nextFeature()">
+          <i class="ti ti-arrow-right" style="font-size: 20px;"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Right Side - Feature Showcase -->
+    <div style="position: relative; background: rgb(var(--color-contrast-secondary)); border-radius: 24px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+      
+      <!-- Feature 1: Workspaces & Teams -->
+      <div id="feature1" class="feature-slide" style="display: block;">
+        <div style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 12px; color: rgb(var(--color-primary));">Workspaces & Teams</h3>
+          <p style="color: rgb(var(--color-secondary)); font-size: 1rem; line-height: 1.6;">
+            Collaborate smarter, stay in sync. Team up, share files, manage together.
+          </p>
+        </div>
+        
+        <!-- Workspace Cards -->
+        <div style="space-y: 16px;">
+          <!-- Acme Inc Workspace -->
+          <div style="background: rgb(var(--color-contrast-primary)); border: 1px solid rgb(var(--color-line-secondary)); border-radius: 16px; padding: 20px; margin-bottom: 16px;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 48px; height: 48px; background: rgb(var(--color-accent)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgb(var(--color-contrast-primary)); font-weight: bold; font-size: 1.2rem;">
+                  A
+                </div>
+                <div>
+                  <h4 style="font-size: 1.1rem; font-weight: 600; margin: 0 0 4px 0; color: rgb(var(--color-primary));">Acme, Inc.</h4>
+                  <p style="margin: 0; font-size: 0.9rem; color: rgb(var(--color-secondary));">Pro Plan</p>
+                </div>
+              </div>
+              
+              <!-- Team Avatars -->
+              <div style="display: flex; align-items: center; gap: -8px;">
+                <div style="width: 32px; height: 32px; background: #FF6B6B; border-radius: 50%; border: 2px solid rgb(var(--color-contrast-primary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: 500;">J</div>
+                <div style="width: 32px; height: 32px; background: #4ECDC4; border-radius: 50%; border: 2px solid rgb(var(--color-contrast-primary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: 500; margin-left: -8px;">S</div>
+                <div style="width: 32px; height: 32px; background: #45B7D1; border-radius: 50%; border: 2px solid rgb(var(--color-contrast-primary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: 500; margin-left: -8px;">M</div>
+                <div style="width: 32px; height: 32px; background: #F7DC6F; border-radius: 50%; border: 2px solid rgb(var(--color-contrast-primary)); display: flex; align-items: center; justify-content: center; color: #333; font-size: 0.8rem; font-weight: 500; margin-left: -8px;">A</div>
+                <div style="width: 32px; height: 32px; background: #BB8FCE; border-radius: 50%; border: 2px solid rgb(var(--color-contrast-primary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: 500; margin-left: -8px;">R</div>
+                <div style="width: 32px; height: 32px; background: rgb(var(--color-line-secondary)); border-radius: 50%; border: 2px solid rgb(var(--color-contrast-primary)); display: flex; align-items: center; justify-content: center; color: rgb(var(--color-secondary)); font-size: 1rem; margin-left: -8px;">
+                  <i class="ti ti-plus"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Personal Workspace (Highlighted) -->
+          <div style="background: rgb(var(--color-contrast-primary)); border: 3px solid rgb(var(--color-accent)); border-radius: 16px; padding: 20px; position: relative;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 48px; height: 48px; background: rgb(var(--color-line-secondary)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgb(var(--color-secondary)); font-weight: bold; font-size: 1.2rem;">
+                  P
+                </div>
+                <div>
+                  <h4 style="font-size: 1.1rem; font-weight: 600; margin: 0 0 4px 0; color: rgb(var(--color-primary));">Personal</h4>
+                  <p style="margin: 0; font-size: 0.9rem; color: rgb(var(--color-secondary));">Free Plan</p>
+                </div>
+              </div>
+              
+              <!-- Switch Button -->
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 24px; height: 24px; color: rgb(var(--color-secondary));">
+                  <i class="ti ti-cursor" style="font-size: 20px;"></i>
+                </div>
+                <button style="padding: 6px 16px; background: rgb(var(--color-accent)); color: rgb(var(--color-contrast-primary)); border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                  Switch
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Add New Workspace -->
+          <div style="display: flex; align-items: center; gap: 12px; padding: 16px; color: rgb(var(--color-secondary)); cursor: pointer; border-radius: 12px; transition: background-color 0.2s;" onmouseover="this.style.background='rgb(var(--color-line-tertiary))'" onmouseout="this.style.background='transparent'">
+            <div style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <i class="ti ti-plus" style="font-size: 18px;"></i>
+            </div>
+            <span style="font-size: 0.95rem; font-weight: 500;">Add new workspace</span>
+          </div>
+        </div>
+        
+        <!-- Feature Image Placeholder -->
+        <div style="margin-top: 20px; background: rgb(var(--color-contrast-primary)); border: 1px solid rgb(var(--color-line-secondary)); border-radius: 16px; padding: 0; overflow: hidden; position: relative;">
+          <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; border-radius: 16px;">
+            <div style="text-align: center;">
+              <i class="ti ti-users" style="font-size: 40px; margin-bottom: 12px; opacity: 0.8;"></i>
+              <h4 style="margin: 0; font-size: 1rem; font-weight: 500;">Workspaces Screenshot</h4>
+              <p style="margin: 6px 0 0 0; font-size: 0.8rem; opacity: 0.8;">Replace with actual image</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature 2: AI Model Selection -->
+      <div id="feature2" class="feature-slide" style="display: none;">
+        <div style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 12px; color: rgb(var(--color-primary));">Select your favourite AI model</h3>
+          <p style="color: rgb(var(--color-secondary)); font-size: 1rem; line-height: 1.6;">
+            Choose the AI brain you want to work with. Switch between models anytime, match your needs.
+          </p>
+        </div>
+        
+        <!-- Model Selection -->
+        <div style="background: rgb(var(--color-contrast-primary)); border-radius: 16px; padding: 24px;">
+          <div style="margin-bottom: 20px;">
+            <button style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: rgb(var(--color-contrast-secondary)); border: 1px solid rgb(var(--color-line-secondary)); border-radius: 12px; color: rgb(var(--color-primary)); font-size: 0.95rem; cursor: pointer;">
+              <span>Select model</span>
+              <i class="ti ti-chevron-down"></i>
+            </button>
+          </div>
+          
+          <!-- Model Options -->
+          <div style="space-y: 12px;">
+            <!-- GPT Image 1 -->
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: rgb(var(--color-contrast-secondary)); margin-bottom: 12px;">
+              <div style="width: 32px; height: 32px; background: #10B981; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;">
+                G
+              </div>
+              <div style="flex: 1;">
+                <h4 style="margin: 0 0 2px 0; font-size: 0.9rem; font-weight: 600; color: rgb(var(--color-primary));">GPT Image 1</h4>
+                <p style="margin: 0; font-size: 0.75rem; color: rgb(var(--color-tertiary));">OpenAI</p>
+              </div>
+              <div style="font-size: 0.75rem; color: rgb(var(--color-tertiary));">
+                State-of-the-art image generation model with exceptional quality
+              </div>
+            </div>
+            
+            <!-- Veo 3 -->
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: rgb(var(--color-contrast-secondary)); margin-bottom: 12px;">
+              <div style="width: 32px; height: 32px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;">
+                G
+              </div>
+              <div style="flex: 1;">
+                <h4 style="margin: 0 0 2px 0; font-size: 0.9rem; font-weight: 600; color: rgb(var(--color-primary));">Veo 3</h4>
+                <p style="margin: 0; font-size: 0.75rem; color: rgb(var(--color-tertiary));">Google</p>
+              </div>
+              <div style="font-size: 0.75rem; color: rgb(var(--color-tertiary));">
+                The most advanced AI video generation model with incredible realism
+              </div>
+            </div>
+            
+            <!-- O3 mini -->
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: rgb(var(--color-contrast-secondary));">
+              <div style="width: 32px; height: 32px; background: #8B5CF6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;">
+                G
+              </div>
+              <div style="flex: 1;">
+                <h4 style="margin: 0 0 2px 0; font-size: 0.9rem; font-weight: 600; color: rgb(var(--color-primary));">O3 mini</h4>
+                <p style="margin: 0; font-size: 0.75rem; color: rgb(var(--color-tertiary));">OpenAI</p>
+              </div>
+              <div style="font-size: 0.75rem; color: rgb(var(--color-tertiary));">
+                Compact yet powerful reasoning model for complex tasks
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Feature Image Placeholder -->
+        <div style="margin-top: 20px; background: rgb(var(--color-contrast-primary)); border: 1px solid rgb(var(--color-line-secondary)); border-radius: 16px; padding: 0; overflow: hidden; position: relative;">
+          <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; color: white; border-radius: 16px;">
+            <div style="text-align: center;">
+              <i class="ti ti-robot" style="font-size: 40px; margin-bottom: 12px; opacity: 0.8;"></i>
+              <h4 style="margin: 0; font-size: 1rem; font-weight: 500;">AI Models Screenshot</h4>
+              <p style="margin: 6px 0 0 0; font-size: 0.8rem; opacity: 0.8;">Replace with actual image</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature 3: Chat Interface -->
+      <div id="feature3" class="feature-slide" style="display: none;">
+        <div style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 12px; color: rgb(var(--color-primary));">Intelligent Chat Interface</h3>
+          <p style="color: rgb(var(--color-secondary)); font-size: 1rem; line-height: 1.6;">
+            Experience seamless conversations with advanced AI. Get instant responses with context awareness.
+          </p>
+        </div>
+        
+        <!-- Chat Interface Screenshot -->
+        <div style="background: rgb(var(--color-contrast-primary)); border: 1px solid rgb(var(--color-line-secondary)); border-radius: 16px; padding: 0; overflow: hidden; position: relative;">
+          <!-- Placeholder for Chat Interface -->
+          <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; border-radius: 16px;">
+            <div style="text-align: center;">
+              <i class="ti ti-message-circle" style="font-size: 48px; margin-bottom: 16px; opacity: 0.8;"></i>
+              <h4 style="margin: 0; font-size: 1.2rem; font-weight: 500;">Chat Interface Preview</h4>
+              <p style="margin: 8px 0 0 0; font-size: 0.9rem; opacity: 0.8;">Replace with actual screenshot</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature 4: Dashboard Analytics -->
+      <div id="feature4" class="feature-slide" style="display: none;">
+        <div style="margin-bottom: 32px;">
+          <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 12px; color: rgb(var(--color-primary));">Analytics Dashboard</h3>
+          <p style="color: rgb(var(--color-secondary)); font-size: 1rem; line-height: 1.6;">
+            Track your AI usage, monitor performance metrics, and optimize your workflow with detailed insights.
+          </p>
+        </div>
+        
+        <!-- Dashboard Screenshot -->
+        <div style="background: rgb(var(--color-contrast-primary)); border: 1px solid rgb(var(--color-line-secondary)); border-radius: 16px; padding: 0; overflow: hidden; position: relative;">
+          <!-- Placeholder for Dashboard -->
+          <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; border-radius: 16px;">
+            <div style="text-align: center;">
+              <i class="ti ti-chart-bar" style="font-size: 48px; margin-bottom: 16px; opacity: 0.8;"></i>
+              <h4 style="margin: 0; font-size: 1.2rem; font-weight: 500;">Analytics Dashboard Preview</h4>
+              <p style="margin: 8px 0 0 0; font-size: 0.9rem; opacity: 0.8;">Replace with actual screenshot</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- What can I help you with Section -->
+  <div style="text-center; margin-bottom: 60px;">
+    <h2 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 16px; color: rgb(var(--color-primary));">What can I help you with?</h2>
+    <p style="font-size: 1.2rem; color: rgb(var(--color-secondary)); max-width: 600px; margin: 0 auto;">
+      Try these popular requests to see what our AI can do for you.
+    </p>
+  </div>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+    <!-- Writing Assistant -->
+    <div style="background: rgb(var(--color-contrast-primary)); padding: 24px; border-radius: 16px; border: 1px solid rgb(var(--color-line-secondary)); cursor: pointer; transition: all 0.3s;" onclick="quickPrompt('Help me write a professional email to my team about a project update')">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="width: 48px; height: 48px; background: rgb(var(--color-contrast-accent)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgb(var(--color-accent)); font-size: 20px;">
+          <i class="ti ti-pencil"></i>
+        </div>
+        <h3 style="font-size: 1.2rem; font-weight: 600; margin: 0; color: rgb(var(--color-primary));">Writing Assistant</h3>
+      </div>
+      <p style="color: rgb(var(--color-secondary)); margin: 0 0 12px 0; line-height: 1.5;">Get help with emails, essays, creative writing, and professional documents.</p>
+      <div style="font-size: 0.8rem; color: rgb(var(--color-tertiary)); font-style: italic;">Click to try: "Help me write a professional email..."</div>
+    </div>
+    
+    <!-- Code Helper -->
+    <div style="background: rgb(var(--color-contrast-primary)); padding: 24px; border-radius: 16px; border: 1px solid rgb(var(--color-line-secondary)); cursor: pointer; transition: all 0.3s;" onclick="quickPrompt('Explain this JavaScript code and help me optimize it')">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="width: 48px; height: 48px; background: rgb(var(--color-contrast-accent)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgb(var(--color-accent)); font-size: 20px;">
+          <i class="ti ti-code"></i>
+        </div>
+        <h3 style="font-size: 1.2rem; font-weight: 600; margin: 0; color: rgb(var(--color-primary));">Code Helper</h3>
+      </div>
+      <p style="color: rgb(var(--color-secondary)); margin: 0 0 12px 0; line-height: 1.5;">Debug issues, explain algorithms, write functions, and learn programming concepts.</p>
+      <div style="font-size: 0.8rem; color: rgb(var(--color-tertiary)); font-style: italic;">Click to try: "Explain this JavaScript code..."</div>
+    </div>
+    
+    <!-- Creative Ideas -->
+    <div style="background: rgb(var(--color-contrast-primary)); padding: 24px; border-radius: 16px; border: 1px solid rgb(var(--color-line-secondary)); cursor: pointer; transition: all 0.3s;" onclick="quickPrompt('I need creative ideas for a marketing campaign')">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="width: 48px; height: 48px; background: rgb(var(--color-contrast-accent)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgb(var(--color-accent)); font-size: 20px;">
+          <i class="ti ti-bulb"></i>
+        </div>
+        <h3 style="font-size: 1.2rem; font-weight: 600; margin: 0; color: rgb(var(--color-primary));">Creative Ideas</h3>
+      </div>
+      <p style="color: rgb(var(--color-secondary)); margin: 0 0 12px 0; line-height: 1.5;">Brainstorm solutions, generate ideas, plan projects, and solve complex problems.</p>
+      <div style="font-size: 0.8rem; color: rgb(var(--color-tertiary)); font-style: italic;">Click to try: "I need creative ideas for..."</div>
+    </div>
+  </div>
+  
+  <!-- CTA Section -->
+  <div style="background: rgb(var(--color-accent)); color: rgb(var(--color-contrast-primary)); padding: 40px; border-radius: 20px; text-align: center; margin-top: 60px;">
+    <h2 style="font-size: 2rem; margin-bottom: 16px;">Ready for unlimited AI power?</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+      Get unlimited credits, access to advanced models, conversation history, and priority support.
+    </p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="/signup" style="padding: 12px 24px; border: 2px solid rgb(var(--color-contrast-primary)); border-radius: 12px; color: rgb(var(--color-contrast-primary)); text-decoration: none; font-weight: 500; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
+        <i class="ti ti-sparkles"></i>
+        Get Unlimited Access
+      </a>
+      <a href="/learn-more" style="padding: 12px 24px; border: 2px solid rgb(var(--color-contrast-primary)); border-radius: 12px; color: rgb(var(--color-contrast-primary)); text-decoration: none; font-weight: 500; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
+        <i class="ti ti-info-circle"></i>
+        Learn More
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Simple JavaScript Chat Implementation
+document.addEventListener('DOMContentLoaded', function() {
+    const guestIp = '{{ guest_ip }}';
+    const initialCredits = {{ guest_credits }};
+    
+    let messages = [];
+    let isLoading = false;
+    let creditsRemaining = initialCredits;
+    
+    // Get DOM elements
+    const mainInput = document.getElementById('mainInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const keyboardHint = document.getElementById('keyboardHint');
+    const chatModal = document.getElementById('chatModal');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    const messagesArea = document.getElementById('messagesArea');
+    
+    // Helper: detect logged-in user
+    function isLoggedIn() {
+      try {
+        if (localStorage.getItem('jwt')) return true;
+        return document.cookie.split('; ').some(c => c.startsWith('user='));
+      } catch (_) { return false; }
+    }
+
+    function redirectToAppWithQuery(query) {
+      const q = encodeURIComponent(query);
+      window.location.href = `/app/chat?q=${q}`;
+    }
+    
+    // Load stored data
+    loadMessages();
+    updateCreditsDisplay();
+    
+    // Event listeners
+    mainInput.addEventListener('keydown', handleMainInputKeydown);
+    mainInput.addEventListener('input', handleMainInputChange);
+    mainInput.addEventListener('focus', () => keyboardHint.style.opacity = '0');
+    mainInput.addEventListener('blur', () => keyboardHint.style.opacity = '1');
+
+    // Global fallback for send button
+    window.__guestSend = function() {
+      try {
+        const val = (mainInput && mainInput.value || '').trim();
+        if (val) {
+          if (isLoggedIn()) {
+            redirectToAppWithQuery(val);
+            return false;
+          }
+          chatInput.value = val;
+          if (mainInput) mainInput.value = '';
+          openChatModal();
+          setTimeout(() => sendMessage(), 300);
+          return false;
+        }
+        openChatModal();
+        return false;
+      } catch (e) {
+        console.error('Send handler error:', e);
+        openChatModal();
+        return false;
+      }
+    };
+
+    // Also attach click listener
+    sendBtn && sendBtn.addEventListener('click', window.__guestSend);
+    
+    chatForm.addEventListener('submit', handleChatSubmit);
+    chatInput.addEventListener('keydown', handleChatKeydown);
+    chatInput.addEventListener('input', handleChatInputChange);
+    
+    // Keyboard shortcut
+    document.addEventListener('keydown', function(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            mainInput.focus();
+        }
+    });
+    
+    // Load messages from localStorage
+    function loadMessages() {
+        try {
+            const stored = localStorage.getItem(`guest_messages_${guestIp}`);
+            if (stored) {
+                messages = JSON.parse(stored);
+            }
+            
+            const storedCredits = localStorage.getItem(`guest_credits_${guestIp}`);
+            if (storedCredits !== null) {
+                creditsRemaining = parseInt(storedCredits);
+            }
+        } catch (e) {
+            console.error('Error loading messages:', e);
+        }
+    }
+    
+    // Save messages to localStorage
+    function saveMessages() {
+        try {
+            localStorage.setItem(`guest_messages_${guestIp}`, JSON.stringify(messages));
+            localStorage.setItem(`guest_credits_${guestIp}`, creditsRemaining.toString());
+        } catch (e) {
+            console.error('Error saving messages:', e);
+        }
+    }
+    
+    // Handle main input keydown
+    function handleMainInputKeydown(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const val = mainInput.value.trim();
+            if (val) {
+                if (isLoggedIn()) {
+                  redirectToAppWithQuery(val);
+                  return;
+                }
+                chatInput.value = val;
+                mainInput.value = '';
+                openChatModal();
+                setTimeout(() => sendMessage(), 500);
+            }
+        }
+    }
+    
+    // Handle main input change
+    function handleMainInputChange() {
+        // Keep send button clickable to allow redirect or opening modal
+        sendBtn.disabled = false;
+        autoResize(mainInput);
+    }
+    
+    // Handle chat form submit
+    function handleChatSubmit(e) {
+        e.preventDefault();
+        sendMessage();
+    }
+    
+    // Handle chat input keydown
+    function handleChatKeydown(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    }
+    
+    // Handle chat input change
+    function handleChatInputChange() {
+        chatSendBtn.disabled = !chatInput.value.trim() || isLoading || creditsRemaining <= 0;
+        autoResize(chatInput);
+    }
+    
+    // Auto resize textarea
+    function autoResize(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+    }
+    
+    // Open chat modal
+    function openChatModal() {
+        chatModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (chatInput.value.trim()) {
+            chatInput.focus();
+        }
+        updateMessagesDisplay();
+    }
+    
+    // Close chat modal
+    window.closeChatModal = function() {
+        chatModal.classList.remove('active');
+        document.body.style.overflow = '';
+        mainInput.value = chatInput.value;
+        handleMainInputChange();
+    };
+    
+    // Send message function
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message || isLoading || creditsRemaining <= 0) {
+            return;
+        }
+
+        // If already logged in, redirect to app chat with query
+        if (isLoggedIn()) {
+          redirectToAppWithQuery(message);
+          return;
+        }
+        
+        // Add user message
+        const userMessage = {
+            id: Date.now(),
+            role: 'user',
+            content: escapeHtml(message),
+            timestamp: new Date().toLocaleTimeString()
+        };
+        
+        messages.push(userMessage);
+        chatInput.value = '';
+        isLoading = true;
+        
+        updateMessagesDisplay();
+        updateLoadingState();
+        scrollToBottom();
+        
+        try {
+            console.log('Sending message to API...');
+            const response = await fetch('/api/guest/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message,
+                    guest_ip: guestIp,
+                    conversation_history: messages.slice(-10)
+                })
+            });
+            
+            console.log('Response status:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            console.log('API response:', data);
+            
+            const assistantMessage = {
+                id: Date.now() + 1,
+                role: 'assistant',
+                content: formatResponse(data.response || 'No response received'),
+                timestamp: new Date().toLocaleTimeString()
+            };
+            
+            messages.push(assistantMessage);
+            creditsRemaining = data.credits_remaining || creditsRemaining - 1;
+            
+            saveMessages();
+            
+        } catch (error) {
+            console.error('Error sending message:', error);
+            const errorMessage = {
+                id: Date.now() + 1,
+                role: 'assistant',
+                content: `Thank you for your message! This is a demo response showing the interface is working. ${error.message.includes('fetch') ? 'The API will be connected when deployed to the server.' : ''}`,
+                timestamp: new Date().toLocaleTimeString()
+            };
+            messages.push(errorMessage);
+            creditsRemaining = Math.max(0, creditsRemaining - 1);
+        } finally {
+            isLoading = false;
+            updateMessagesDisplay();
+            updateCreditsDisplay();
+            updateLoadingState();
+            scrollToBottom();
+            saveMessages();
+        }
+    }
+    
+    // Update messages display
+    function updateMessagesDisplay() {
+        let messagesHTML = `
+            <div class="message ai">
+                <div class="message-avatar ai">
+                    <i class="ti ti-robot"></i>
+                </div>
+                <div>
+                    <div class="message-content">
+                        <strong>Welcome to Probabilix AI! 🎉</strong><br><br>
+                        I'm here to help you with anything you need. You have ${initialCredits} free credits to get started. 
+                        Try asking me about writing, coding, analysis, or any creative tasks!
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        `;
+        
+        messages.forEach(message => {
+            messagesHTML += `
+                <div class="message ${message.role}">
+                    <div class="message-avatar ${message.role}">
+                        <i class="ti ${message.role === 'user' ? 'ti-user' : 'ti-robot'}"></i>
+                    </div>
+                    <div>
+                        <div class="message-content">${message.content}</div>
+                        <div class="message-time">${message.timestamp}</div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        if (isLoading) {
+            messagesHTML += `
+                <div class="message ai loading-message">
+                    <div class="message-avatar ai">
+                        <i class="ti ti-robot"></i>
+                    </div>
+                    <div>
+                        <div class="message-content">
+                            <div class="loading-dots">
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                                <span style="margin-left: 10px;">AI is thinking...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        messagesArea.innerHTML = messagesHTML;
+    }
+    
+    // Update credits display
+    function updateCreditsDisplay() {
+        const creditsDisplay = document.getElementById('creditsDisplay');
+        const creditsFooter = document.getElementById('creditsFooter');
+        
+        if (creditsDisplay) {
+            creditsDisplay.textContent = `${creditsRemaining} free credits`;
+        }
+        if (creditsFooter) {
+            creditsFooter.textContent = `${creditsRemaining} credits remaining`;
+        }
+        
+        // Show credit warnings
+        const creditWarning = document.getElementById('creditWarning');
+        if (creditWarning) {
+            if (creditsRemaining <= 0) {
+                creditWarning.innerHTML = `
+                    <div class="warning-banner error">
+                        <i class="ti ti-alert-circle"></i>
+                        <div>
+                            <strong>Credits Exhausted</strong><br>
+                            You've used all your free credits! 
+                            <a href="/signup" style="font-weight: 600; text-decoration: underline;">Sign up</a> 
+                            to get unlimited access.
+                        </div>
+                    </div>
+                `;
+                creditWarning.style.display = 'block';
+            } else if (creditsRemaining <= 3) {
+                creditWarning.innerHTML = `
+                    <div class="warning-banner warning">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div>
+                            <strong>Running Low on Credits</strong><br>
+                            Only ${creditsRemaining} credits remaining. 
+                            <a href="/signup" style="font-weight: 600; text-decoration: underline;">Sign up</a> 
+                            for unlimited access!
+                        </div>
+                    </div>
+                `;
+                creditWarning.style.display = 'block';
+            } else {
+                creditWarning.style.display = 'none';
+            }
+        }
+    }
+    
+    // Update loading state
+    function updateLoadingState() {
+        const sendIcon = document.getElementById('sendIcon');
+        const loadingIcon = document.getElementById('loadingIcon');
+        const chatSendIcon = document.getElementById('chatSendIcon');
+        const chatLoadingIcon = document.getElementById('chatLoadingIcon');
+        
+        if (sendIcon && loadingIcon) {
+            sendIcon.style.display = isLoading ? 'none' : 'block';
+            loadingIcon.style.display = isLoading ? 'block' : 'none';
+        }
+        
+        if (chatSendIcon && chatLoadingIcon) {
+            chatSendIcon.style.display = isLoading ? 'none' : 'block';
+            chatLoadingIcon.style.display = isLoading ? 'block' : 'none';
+        }
+        
+        chatSendBtn.disabled = !chatInput.value.trim() || isLoading || creditsRemaining <= 0;
+    }
+    
+    // Scroll to bottom
+    function scrollToBottom() {
+        setTimeout(() => {
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }, 100);
+    }
+    
+    // Escape HTML
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // Format response
+    function formatResponse(text) {
+        return text
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>');
+    }
+    
+    // Quick prompt function for feature cards
+    window.quickPrompt = function(prompt) {
+        if (creditsRemaining <= 0 || isLoading) return;
+        chatInput.value = prompt;
+        openChatModal();
+        setTimeout(() => sendMessage(), 500);
+    };
+    
+    // Scroll to features
+    window.scrollToFeatures = function() {
+        document.getElementById('featuresSection').scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+    };
+    
+    // Feature slides navigation
+    let currentFeature = 1;
+    const totalFeatures = 4;
+    
+    window.nextFeature = function() {
+        document.getElementById(`feature${currentFeature}`).style.display = 'none';
+        currentFeature = currentFeature >= totalFeatures ? 1 : currentFeature + 1;
+        document.getElementById(`feature${currentFeature}`).style.display = 'block';
+    };
+    
+    window.previousFeature = function() {
+        document.getElementById(`feature${currentFeature}`).style.display = 'none';
+        currentFeature = currentFeature <= 1 ? totalFeatures : currentFeature - 1;
+        document.getElementById(`feature${currentFeature}`).style.display = 'block';
+    };
+    
+    // Auto-rotate features every 5 seconds
+    setInterval(() => {
+        if (document.getElementById('featuresSection').offsetTop > window.scrollY + window.innerHeight) {
+            return; // Don't auto-rotate if features section is not visible
+        }
+        nextFeature();
+    }, 5000);
+    
+    console.log('Guest chat initialized successfully');
+    
+    // Typing animation for greeting (robust + immediate)
+    const typingTarget = document.getElementById('typingText');
+    const caret = document.querySelector('.typing-caret');
+    const phrases = [
+        "Hey, what's on your mind today?",
+        "Ask me anything — I’m here to help.",
+        "Create, code, analyze, brainstorm — let’s build together.",
+        "From ideas to execution, I’ve got your back."
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeLoop() {
+        if (!typingTarget) return; // safety
+        const current = phrases[phraseIndex];
+        const nextIndex = isDeleting ? Math.max(0, charIndex - 1) : Math.min(current.length, charIndex + 1);
+        typingTarget.textContent = current.substring(0, nextIndex);
+        charIndex = nextIndex;
+
+        if (!isDeleting && charIndex === current.length) {
+            setTimeout(() => { isDeleting = true; }, 1000);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+
+        const baseSpeed = isDeleting ? 45 : 65;
+        const jitter = Math.random() * 60;
+        setTimeout(typeLoop, baseSpeed + jitter);
+    }
+
+    // Start immediately with first character so it never looks empty
+    if (typingTarget) {
+        typingTarget.textContent = phrases[0].charAt(0);
+        charIndex = 1;
+        setTimeout(typeLoop, 150);
+        // Watchdog: force start if not changing
+        setTimeout(() => {
+            if (typingTarget && typingTarget.textContent.length <= 1) {
+                charIndex = 1;
+                isDeleting = false;
+                typeLoop();
+            }
+        }, 800);
+    }
+
+    // Initial setup
+    updateCreditsDisplay();
+    handleMainInputChange();
+});
+</script>
+
+<style>
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
+{% endblock %} 

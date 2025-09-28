@@ -1,0 +1,385 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Theme Translations\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language: sv-SE\n"
+"Language-Team: \n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: theme\n"
+
+msgid "AI Writer"
+msgstr "AI-skrivare"
+
+msgid "Achieve superior outcomes in a fraction of the time. At last, a writing tool that you'll genuinely utilize."
+msgstr "Uppnå överlägsna resultat på en bråkdel av tiden. Till slut, ett skrivverktyg som du verkligen kommer att använda."
+
+msgctxt "heading"
+msgid "Write SEO optimized blogs, sales emails and more..."
+msgstr "Skriv SEO-optimerade bloggar, försäljningsmejl och mer..."
+
+msgctxt "button"
+msgid "See all features"
+msgstr "Se alla funktioner"
+
+msgid "Video"
+msgstr ""
+
+msgid "No video editing skills required - just upload your images and enter a few lines of prompt, that's it."
+msgstr ""
+
+msgctxt "heading"
+msgid "Generate high-quality videos using AI Video generation tool."
+msgstr ""
+
+msgctxt "button"
+msgid "Try now"
+msgstr "Prova nu"
+
+msgid "Text to Voice"
+msgstr "Text till tal"
+
+msgid "Elevate Your Content with Expressive Narration: Discover Text-to-Voice Excellence."
+msgstr "Föröka ditt innehåll med uttrycksfullt berättande: Upptäck text till tal-excellens."
+
+msgctxt "heading"
+msgid "Convert your texts into <br> Lifelike Speech"
+msgstr "Konvertera dina texter till <br> naturligt tal"
+
+msgid "Speech to Text"
+msgstr "Tal till text"
+
+msgid "Instantly Transcribe Spoken Words into Text for Enhanced Productivity and Accessibility."
+msgstr "Omedelbart översätt talade ord till text för förbättrad produktivitet och tillgänglighet."
+
+msgctxt "heading"
+msgid "Transforming Spoken <br> Words into Text."
+msgstr "Omvandla talade <br> ord till text."
+
+msgctxt "button"
+msgid "Convert now"
+msgstr "Konvertera nu"
+
+msgid ":count credits"
+msgstr ":count krediter"
+
+msgid "Discover the perfect plan to suit your needs and unlock a world of possibilities."
+msgstr "Upptäck det perfekta plan som passar dina behov och lås upp en värld av möjligheter."
+
+msgid "Most Popular"
+msgstr "Mest populär"
+
+msgid "Chat"
+msgstr "Chatt"
+
+msgid "Writer"
+msgstr "Skrivare"
+
+msgid "Coding Assistant"
+msgstr "Kodningsassistent"
+
+msgid "Image generator"
+msgstr "Bildgenerator"
+
+msgid "Transcriber"
+msgstr "Transkriberare"
+
+msgid "Voiceover"
+msgstr "Röstinspelning"
+
+msgid "Voice isolator"
+msgstr "Röstisolator"
+
+msgid "Classifier"
+msgstr "Klassificerare"
+
+msgid "Access to templates is disabled"
+msgstr "Åtkomst till mallar är inaktiverad"
+
+msgid "Access to all templates"
+msgstr "Åtkomst till alla mallar"
+
+msgid "Priority support"
+msgstr "Prioriterad support"
+
+msgid "Basic support"
+msgstr "Grundläggande support"
+
+msgctxt "heading"
+msgid "Pricing"
+msgstr ""
+
+msgctxt "button"
+msgid "Monthly"
+msgstr "Månadsvis"
+
+msgctxt "button"
+msgid "Yearly"
+msgstr "Årsvis"
+
+msgctxt "button"
+msgid "Packs"
+msgstr "Paket"
+
+msgctxt "button"
+msgid "Lifetime Deals"
+msgstr "Livstidsavtal"
+
+msgctxt "button"
+msgid "Get started"
+msgstr "Kom igång"
+
+msgid "100+ AI Writer Templates"
+msgstr "100+ AI-skrivmallar"
+
+msgid "Write with remarkable speed, captivate your audience, and bid farewell to writer\\'s block forever."
+msgstr "Skriv med oöverträffad hastighet, fånga din publik och säg adjö till skrivblocket för alltid."
+
+msgctxt "heading"
+msgid "What can Writing Assistant create for you?"
+msgstr "Vad kan Writing Assistant skapa åt dig?"
+
+msgctxt "button"
+msgid "Get Started for Free"
+msgstr "Kom igång gratis"
+
+msgid "AI Image"
+msgstr "AI-bild"
+
+msgid "Instantly create stunning images using AI Image Generator – your tool for artistic innovation."
+msgstr "Skapa storslagna bilder med AI Image Generator - din verktyg för konstnärlig innovation."
+
+msgctxt "heading"
+msgid "Visualize what you dream of. Create images from text."
+msgstr "Visualisera det du drömmer om. Skapa bilder från text."
+
+msgctxt "button"
+msgid "Try for free"
+msgstr "Prova gratis"
+
+msgid "Choose a our built in templates or create your own."
+msgstr "Välj en av våra inbyggda mallar eller skapa din egen."
+
+msgid "Enter a few sentences to describe your topic. Add keywords to specify for your brand."
+msgstr "Ange några meningar för att beskriva ditt ämne. Lägg till nyckelförordningar för att ange för din varumärke."
+
+msgid "Click the \"Generate\" button and get a variety of high-converting copy every time."
+msgstr "Klicka på \"Generera\"-knappen och få en mängd olika högkonverterande kopior varje gång."
+
+msgctxt "heading"
+msgid "How it works"
+msgstr "Så fungerar det"
+
+msgctxt "heading"
+msgid "Choose Template"
+msgstr "Välj mall"
+
+msgctxt "heading"
+msgid "Describe"
+msgstr "Beskriv"
+
+msgctxt "heading"
+msgid "Generate"
+msgstr "Generera"
+
+msgid "Effortlessly generate high-quality AI-driven content tailored to your needs. Unlock limitless possibilities, save your time and start making money today!"
+msgstr "Generera enkelt högkvalitativt innehåll drivet av AI, anpassat efter dina behov. Lås upp obegränsade möjligheter, spara tid och börja tjäna pengar idag!"
+
+msgctxt "heading"
+msgid "Transforming ideas into AI generated masterpieces"
+msgstr "Förvandlar idéer till AI-genererade mästerverk"
+
+msgctxt "button"
+msgid "Go to app"
+msgstr "Gå till appen"
+
+msgctxt "button"
+msgid "Get started now"
+msgstr "Kom igång nu"
+
+msgctxt "button"
+msgid "Product"
+msgstr "Produkt"
+
+msgctxt "button"
+msgid "Featured"
+msgstr "Utvald"
+
+msgctxt "button"
+msgid "Pricing"
+msgstr "Prissättning"
+
+msgctxt "button"
+msgid "Library"
+msgstr "Bibliotek"
+
+msgctxt "button"
+msgid "Billing"
+msgstr "Fakturering"
+
+msgctxt "button"
+msgid "Account"
+msgstr "Konto"
+
+msgctxt "button"
+msgid "Logout"
+msgstr "Logga ut"
+
+msgctxt "button"
+msgid "Login"
+msgstr "Logga in"
+
+msgctxt "heading"
+msgid "Meet your ultimate"
+msgstr "Möt din ultimata"
+
+msgctxt "heading"
+msgid "AI-Powered Content Platform"
+msgstr "AI-driven innehållsplattform"
+
+msgid "All rights reserved."
+msgstr "Alla rättigheter förbehållna."
+
+msgctxt "button"
+msgid "FAQ"
+msgstr "Vanliga frågor"
+
+msgctxt "button"
+msgid "Terms of services"
+msgstr "Användarvillkor"
+
+msgctxt "button"
+msgid "Privacy policy"
+msgstr "Integritetspolicy"
+
+msgctxt "button"
+msgid "Refund policy"
+msgstr "Återbetalningspolicy"
+
+msgid "Developed by Using Domain-Driven Design and Onion Architecture Principles."
+msgstr "Utvecklad med hjälp av domändriven design och principer för Onion-arkitektur."
+
+msgid "Built with modern technologies for best structure and get maximum performance."
+msgstr "Byggt med moderna teknologier för bästa struktur och maximal prestanda."
+
+msgid "Enjoy a hassle-free and intuitive user interface that enhances your digital experience."
+msgstr "Njut av ett smärtfritt och intuitivt användargränssnitt som förbättrar din digitala upplevelse."
+
+msgid "Turn off the light and switch to dark mode your interface with one click."
+msgstr "Släck ljuset och växla till mörkt läge i ditt gränssnitt med ett klick."
+
+msgid "An all-inclusive learning package seamlessly integrated into our community."
+msgstr "Ett heltäckande lärandepaket sömlöst integrerat i vår gemenskap."
+
+msgid "Simplify transactions and boost security with payment gateway solutions."
+msgstr "Förenkla transaktioner och öka säkerheten med betalningsgateway-lösningar."
+
+msgid "Unlock limitless creativity with our AI-powered content generator."
+msgstr "Lås upp obegränsad kreativitet med vår AI-drivna innehållsgenerator."
+
+msgid "Boost your visibility and reach your audience effectively with AI generated content."
+msgstr "Öka din synlighet och nå din publik effektivt med AI-genererat innehåll."
+
+msgid "Empower your insights and control with our cutting-edge dashboard."
+msgstr "Stärk dina insikter och kontroll med vår toppmoderna instrumentpanel."
+
+msgid "Transform your content creation with AI-driven custom templates."
+msgstr "Förvandla ditt innehållsskapande med AI-drivna anpassade mallar."
+
+msgid "Use Facebook or Google accounts as an alternatively access to platform."
+msgstr "Använd Facebook- eller Google-konton som ett alternativt sätt att få tillgång till plattformen."
+
+msgid "Our support team is available 24/7 to help you with any questions or concerns."
+msgstr "Vår supportteam är tillgängligt 24/7 för att hjälpa dig med alla frågor eller bekymmer."
+
+msgctxt "heading"
+msgid "Coolest Features"
+msgstr "Coolaste funktionerna"
+
+msgctxt "heading"
+msgid "High Quality Code"
+msgstr "Kod av hög kvalitet"
+
+msgctxt "heading"
+msgid "Modern Technologies"
+msgstr "Moderna teknologier"
+
+msgctxt "heading"
+msgid "Friendly UI and UX"
+msgstr "Vänligt UI och UX"
+
+msgctxt "heading"
+msgid "Dark Mode"
+msgstr "Mörkt läge"
+
+msgctxt "heading"
+msgid "Documentation"
+msgstr "Dokumentation"
+
+msgctxt "heading"
+msgid "Payment Gateways"
+msgstr "Betalningsportaler"
+
+msgctxt "heading"
+msgid "AI Generator"
+msgstr "AI-generator"
+
+msgctxt "heading"
+msgid "SEO Friendly"
+msgstr "SEO-vänlig"
+
+msgctxt "heading"
+msgid "Advanced Dashboard"
+msgstr "Avancerad instrumentpanel"
+
+msgctxt "heading"
+msgid "Custom Templates"
+msgstr "Anpassade mallar"
+
+msgctxt "heading"
+msgid "Login via SM Accounts"
+msgstr "Logga in via SM-konton"
+
+msgctxt "heading"
+msgid "High Quality Support"
+msgstr "Support av hög kvalitet"
+
+msgid "See how easy it can be to write amazing content."
+msgstr "Se hur enkelt det kan vara att skriva fantastiskt innehåll."
+
+msgctxt "heading"
+msgid "Ready to level-up?"
+msgstr "Redo att ta nästa steg?"
+
+msgctxt "button"
+msgid "Get Started Now"
+msgstr "Kom igång nu"
+
+msgid "AI Code"
+msgstr "AI-kod"
+
+msgid "Effortless coding with AI Code Generator: Instant solutions for your programming needs."
+msgstr "Generera enkelt kod med AI Code Generator: Instantlösningar för dina programmeringsbehov."
+
+msgctxt "heading"
+msgid "Ready to write code at the speed of light?"
+msgstr "Redo att skriva kod i ljusets hastighet?"
+
+msgctxt "button"
+msgid "Start Generate Code"
+msgstr "Börja generera kod"
+
+msgid "AI Chat Bot"
+msgstr "AI-chattbot"
+
+msgid "Simply choose your asistant and engage with a friendly chatbot to generate ideas, enhance your content, or even bring a smile to your face."
+msgstr "Välj bara din assistent och engagera dig med en vänlig chattbot för att generera idéer, förbättra ditt innehåll eller till och med föra ett leende till ditt ansikte."
+
+msgctxt "heading"
+msgid "That\\'s remarkably human-like and engaging..."
+msgstr "Det är anmärkningsvärt människolikt och engagerande..."
+
+msgid "Unlimited"
+msgstr "Obegränsad"

@@ -1,0 +1,33 @@
+{
+  "src/css/index.css": {
+    "file": "assets/css-De4qL3Y3.css",
+    "src": "src/css/index.css",
+    "isEntry": true
+  },
+  "src/images1.webp": {
+    "file": "assets/images1-Ct-zoJHG.webp",
+    "src": "src/images1.webp"
+  },
+  "src/images2.webp": {
+    "file": "assets/images2-Bgxorl1h.webp",
+    "src": "src/images2.webp"
+  },
+  "src/images3.webp": {
+    "file": "assets/images3-DnfVt1d6.webp",
+    "src": "src/images3.webp"
+  },
+  "src/images4.webp": {
+    "file": "assets/images4-B-U7aOLF.webp",
+    "src": "src/images4.webp"
+  },
+  "src/js/index.js": {
+    "file": "assets/js-DbVSiXcH.js",
+    "name": "js",
+    "src": "src/js/index.js",
+    "isEntry": true
+  },
+  "src/presets.webp": {
+    "file": "assets/presets-BuHevf0c.webp",
+    "src": "src/presets.webp"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "_formdata-CMBmz5Zs.js": {
+    "file": "assets/formdata-CMBmz5Zs.js",
+    "name": "formdata"
+  },
+  "_ip-K9DB_9g-.js": {
+    "file": "assets/ip-K9DB_9g-.js",
+    "name": "ip",
+    "imports": [
+      "_module.esm-uXcmRlT3.js",
+      "_toast-C5YoKCAA.js"
+    ]
+  },
+  "_module.esm-D2wLF7YV.js": {
+    "file": "assets/module.esm-D2wLF7YV.js",
+    "name": "module.esm"
+  },
+  "_module.esm-uXcmRlT3.js": {
+    "file": "assets/module.esm-uXcmRlT3.js",
+    "name": "module.esm"
+  },
+  "_pin-BBFOlic1.js": {
+    "file": "assets/pin-BBFOlic1.js",
+    "name": "pin"
+  },
+  "_redirect-CPFN15vL.js": {
+    "file": "assets/redirect-CPFN15vL.js",
+    "name": "redirect"
+  },
+  "_toast-C5YoKCAA.js": {
+    "file": "assets/toast-C5YoKCAA.js",
+    "name": "toast"
+  },
+  "resources/assets/css/fonts/tabler-icons.ttf": {
+    "file": "assets/tabler-icons-C4fNWA7X.ttf",
+    "src": "resources/assets/css/fonts/tabler-icons.ttf"
+  },
+  "resources/assets/css/fonts/tabler-icons.woff": {
+    "file": "assets/tabler-icons-D1Ay1q-p.woff",
+    "src": "resources/assets/css/fonts/tabler-icons.woff"
+  },
+  "resources/assets/css/fonts/tabler-icons.woff2": {
+    "file": "assets/tabler-icons-BM2YwPh7.woff2",
+    "src": "resources/assets/css/fonts/tabler-icons.woff2"
+  },
+  "resources/assets/css/icons.css": {
+    "file": "assets/icons-CyqECmnr.css",
+    "src": "resources/assets/css/icons.css",
+    "isEntry": true
+  },
+  "resources/assets/css/index.css": {
+    "file": "assets/style-BIMooD8i.css",
+    "src": "resources/assets/css/index.css",
+    "isEntry": true
+  },
+  "resources/assets/js/admin/index.js": {
+    "file": "assets/admin-BESYEW4Q.js",
+    "name": "admin",
+    "src": "resources/assets/js/admin/index.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-uXcmRlT3.js",
+      "_module.esm-D2wLF7YV.js",
+      "_formdata-CMBmz5Zs.js",
+      "_ip-K9DB_9g-.js",
+      "_toast-C5YoKCAA.js"
+    ]
+  },
+  "resources/assets/js/app/index.js": {
+    "file": "assets/app-BsIryII8.js",
+    "name": "app",
+    "src": "resources/assets/js/app/index.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-uXcmRlT3.js",
+      "_formdata-CMBmz5Zs.js",
+      "_ip-K9DB_9g-.js",
+      "_toast-C5YoKCAA.js",
+      "_pin-BBFOlic1.js",
+      "_redirect-CPFN15vL.js",
+      "_module.esm-D2wLF7YV.js"
+    ]
+  },
+  "resources/assets/js/auth/index.js": {
+    "file": "assets/auth-CqFARZOw.js",
+    "name": "auth",
+    "src": "resources/assets/js/auth/index.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-uXcmRlT3.js",
+      "_ip-K9DB_9g-.js",
+      "_redirect-CPFN15vL.js",
+      "_toast-C5YoKCAA.js"
+    ]
+  },
+  "resources/assets/js/base/index.js": {
+    "file": "assets/base-l1MPM7QY.js",
+    "name": "base",
+    "src": "resources/assets/js/base/index.js",
+    "isEntry": true,
+    "imports": [
+      "_redirect-CPFN15vL.js",
+      "_toast-C5YoKCAA.js",
+      "_pin-BBFOlic1.js",
+      "_module.esm-uXcmRlT3.js"
+    ]
+  },
+  "resources/assets/js/install/index.js": {
+    "file": "assets/install--pGqK2Ym.js",
+    "name": "install",
+    "src": "resources/assets/js/install/index.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-uXcmRlT3.js",
+      "_module.esm-D2wLF7YV.js"
+    ]
+  }
+}

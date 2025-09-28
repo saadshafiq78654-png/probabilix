@@ -1,0 +1,27 @@
+<x-form>
+	<div class="flex flex-col gap-6">
+		<div class="flex items-center gap-2">
+			<button type="button" @click="view('requirements');" class="inline-flex items-center gap-1 text-sm rounded-lg text-content-dimmed hover:text-content">
+				<i class="text-2xl ti ti-square-rounded-arrow-left-filled"></i>
+			</button>
+
+			<h1>License</h1>
+		</div>
+
+		<div class="flex flex-col gap-4 items-center text-center">
+			<div class="flex items-center gap-2 text-success">
+				<i class="text-2xl ti ti-check-circle-filled"></i>
+				<span class="font-semibold">License Verified</span>
+			</div>
+			
+			<p class="text-sm text-content-dimmed">
+				Development license automatically applied for localhost installation.
+			</p>
+		</div>
+
+		<button type="button" @click="view('db');" class="w-full button">
+			Continue
+			<i class="ti square-rounded-arrow-right-filled"></i>
+		</button>
+	</div>
+</x-form>

@@ -1,0 +1,275 @@
+<div x-data="pricing" id="pricing">
+  <div class="text-center">
+    <h2>{{ dp__('theme', 'heading', 'Pricing') }}</h2>
+
+    <p class="mx-auto mt-6 max-w-md">
+      {{ d__('theme', 'Discover the perfect plan to suit your needs and unlock a world of possibilities.')  }}
+    </p>
+  </div>
+
+  <div class="flex justify-center mt-8">
+    <div class="flex gap-1 items-center p-0.5 rounded-full bg-line-tertiary"
+      x-ref="cycles">
+      {% if plans|filter(p => p.billing_cycle == 'monthly')|length > 0 %}
+      <button type="button" class="px-6 py-3 text-sm font-medium rounded-full"
+        data-cycle="monthly" :class="{
+          'bg-contrast-primary': cycle=='monthly',
+          'shadow': cycle=='monthly'
+        }"
+        @click="cycle='monthly'">{{ dp__('theme', 'button', 'Monthly') }}</button>
+      {% endif %}
+
+      {% if plans|filter(p => p.billing_cycle == 'yearly')|length > 0 %}
+      <button type="button" class="px-6 py-3 text-sm font-medium rounded-full"
+        data-cycle="yearly" :class="{
+          'bg-contrast-primary': cycle=='yearly',
+          'shadow': cycle=='yearly'
+        }"
+        @click="cycle='yearly'">{{ dp__('theme', 'button', 'Yearly') }}</button>
+      {% endif %}
+
+      {% if plans|filter(p => p.billing_cycle == 'one-time')|length > 0 %}
+      <button type="button" class="px-6 py-3 text-sm font-medium rounded-full"
+        data-cycle="one-time" :class="{
+          'bg-contrast-primary': cycle=='one-time',
+          'shadow': cycle=='one-time'
+        }"
+        @click="cycle='one-time'">{{ dp__('theme', 'button', 'Packs') }}</button>
+      {% endif %}
+
+      {% if plans|filter(p => p.billing_cycle == 'lifetime')|length > 0 %}
+      <button type="button" class="px-6 py-3 text-sm font-medium rounded-full"
+        data-cycle="lifetime" :class="{
+          'bg-contrast-primary': cycle=='lifetime',
+          'shadow': cycle=='lifetime'
+        }"
+        @click="cycle='lifetime'">{{ dp__('theme', 'button', 'Lifetime Deals') }}</button>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="grid gap-12 mt-8 lg:mt-16 lg:grid-cols-2 xl:grid-cols-3" x-cloak>
+    {% for plan in plans %}
+    <div
+      class="enter p-[10px] rounded-4xl bg-contrast-secondary flex {% if plan.is_featured %}bg-gradient-to-br from-[#E7FF9B] to-[#CFE6FF]{% endif %}"
+      x-show="`{{ plan.billing_cycle }}` == cycle">
+      <div class="p-8 w-full rounded-3xl bg-contrast-primary">
+        <div class="flex justify-between items-center">
+          {% if plan.icon %}
+          <div
+            class="flex items-center justify-center w-12 h-12 rounded-full shadow-md [&_svg]:w-8 [&_svg]:h-8">
+            {% if plan.icon starts with '<svg'  %}
+            {{ plan.icon | raw }}
+            {% else %}
+            <i class="ti ti-{{ plan.icon }} text-3xl"></i>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          {% if plan.is_featured %}
+          <div class="relative">
+            <div
+              class="absolute top-1 left-1 w-full h-full rounded-lg bg-[#E7FF9B] flex bg-gradient-to-br from-[#E7FF9B] to-[#CFE6FF]">
+            </div>
+
+            <div
+              class="p-0.5 rounded-lg bg-[#E7FF9B] flex bg-gradient-to-br from-[#E7FF9B] to-[#CFE6FF] font-bold relative text-accent">
+              <span class="bg-[#E7FF9B] rounded-md py-1 px-2">
+                {{ d__('theme', 'Most Popular') }}
+              </span>
+            </div>
+
+          </div>
+          {% endif %}
+        </div>
+
+        <h3 class="mt-6">{{ plan.title }}</h3>
+
+        {% if plan.description is not empty %}
+        <p class="text-tertiary">{{ plan.description }}</p>
+        {% endif %}
+
+        <div class="mt-8">
+          <x-money class="text-4xl money" data-value="{{ plan.price }}"
+            currency="{{ currency.code }}"
+            minor-units="{{ currency.fraction_digits }}" fraction="auto">
+          </x-money>
+
+          <span class="text-tertiary">/{{ plan.billing_cycle }}</span>
+        </div>
+
+        <a href="/app/billing/checkout/{{ plan.id }}" class="flex mt-8 button">
+          {{ dp__('theme', 'button', 'Get started') }}
+        </a>
+
+        <ul class="flex flex-col gap-4 mt-12">
+          {% if plan.billing_cycle != 'one-time' and option.features.chat.is_enabled is defined and option.features.chat.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.chat.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.chat.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Chat') }}
+
+            {% if plan.config.chat.is_enabled %}
+            <div
+              class="p-0.5 rounded-lg bg-[#E7FF9B] flex bg-gradient-to-br from-[#E7FF9B] to-[#CFE6FF] font-bold relative text-accent">
+            </div>
+            {% endif %}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' and option.features.writer.is_enabled is defined and option.features.writer.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.writer.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.writer.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Writer') }}
+
+            {% if plan.config.writer.is_enabled %}
+            <div
+              class="p-0.5 rounded-lg bg-[#E7FF9B] flex bg-gradient-to-br from-[#E7FF9B] to-[#CFE6FF] font-bold relative text-accent">
+            </div>
+            {% endif %}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' and option.features.coder.is_enabled is defined and option.features.coder.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.coder.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.coder.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Coding Assistant') }}
+
+            {% if plan.config.coder.is_enabled %}
+            <div
+              class="p-0.5 rounded-lg bg-[#E7FF9B] flex bg-gradient-to-br from-[#E7FF9B] to-[#CFE6FF] font-bold relative text-accent">
+            </div>
+            {% endif %}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' and option.features.imagine.is_enabled is defined and option.features.imagine.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.imagine.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.imagine.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Image generator') }}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' and option.features.transcriber.is_enabled is defined and option.features.transcriber.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.transcriber.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.transcriber.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Transcriber') }}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' and option.features.voiceover.is_enabled is defined and option.features.voiceover.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.voiceover.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.voiceover.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Voiceover') }}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' and option.features.voice_isolator.is_enabled is defined and option.features.voice_isolator.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.voice_isolator.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.voice_isolator.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Voice isolator') }}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' and option.features.classifier.is_enabled is defined and option.features.classifier.is_enabled %}
+          <li
+            class="flex items-center gap-2 font-semibold {{ plan.config.classifier.is_enabled ? '' : 'text-tertiary' }}">
+            {% if plan.config.classifier.is_enabled %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x"></i>
+            {% endif %}
+
+            {{ d__('theme', 'Classifier') }}
+          </li>
+          {% endif %}
+
+          {% if plan.billing_cycle != 'one-time' %}
+          <li class="flex gap-2 items-center font-semibold">
+            {% if plan.credit_count == 0 and plan.credit_count is not null %}
+            <i class="text-2xl ti ti-square-rounded-x text-tertiary"></i>
+            {{ d__('theme', 'Access to templates is disabled') }}
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {{ d__('theme', 'Access to all templates') }}
+            {% endif %}
+          </li>
+          {% endif %}
+
+          <li class="flex gap-2 items-center font-semibold">
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+
+            <x-credit data-value="{{ plan.credit_count }}"
+              format="{{ __(":count credits") }}"></x-credit>
+          </li>
+
+          {% if plan.billing_cycle != 'one-time' %}
+          <li class="flex gap-2 items-center font-semibold">
+            {% if plan.price > 0  %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {{ d__('theme', 'Priority support')  }}
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {{ d__('theme', 'Basic support')  }}
+            {% endif %}
+          </li>
+          {% endif %}
+
+          {% for li in plan.feature_list %}
+          <li class="flex gap-2 items-center font-semibold">
+            {% if li.is_included %}
+            <i class="text-2xl ti ti-square-rounded-check-filled"></i>
+            {% else %}
+            <i class="text-2xl ti ti-square-rounded-x text-tertiary"></i>
+            {% endif %}
+
+            {{ li.title  }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
